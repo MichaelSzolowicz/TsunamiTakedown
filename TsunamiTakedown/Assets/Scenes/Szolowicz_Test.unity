@@ -1171,13 +1171,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318109048}
-  m_LocalRotation: {x: -0, y: -0, z: -0.030911641, w: 0.99952215}
+  m_LocalRotation: {x: -0, y: -0, z: -0.25431865, w: 0.9671205}
   m_LocalPosition: {x: -25.8, y: 0.2, z: 12.22}
   m_LocalScale: {x: 22.894434, y: 1, z: 19.482}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -29.466}
 --- !u!1 &1488733076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1255,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827068736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -34.2, y: 11.1, z: 12.02}
+  m_LocalPosition: {x: -5.9, y: 9.5, z: 12.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 100
-  walkingFritction: 0.01
+  walkingFritction: 0.08
   brakingFritction: 0.1
   maxSpeed: 3.4028235e+38
   maxAcceleration: 3.4028235e+38
@@ -1298,7 +1298,7 @@ MonoBehaviour:
   contacts: 0
   inputScale: 5000
   probeDistance: 0.55
-  groundedGravityScale: 8
+  groundedGravityScale: 3
   airControlMultiplier: 0.5
 --- !u!23 &1827068740
 MeshRenderer:

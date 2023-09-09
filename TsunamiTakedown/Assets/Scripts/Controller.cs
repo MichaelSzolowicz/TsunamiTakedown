@@ -106,7 +106,7 @@ public class Controller : MonoBehaviour
             useFriction = Mathf.Abs(pendingInput) > 0.01f ? walkingFritction : brakingFritction;
         }
 
-        print("Fr: " + Vector3.Dot(groundNormal, pendingInput * transform.right));
+        print("Fr: " + useFriction);
 
         Vector3 forceAlongNormal = Vector3.Dot(accumulatedForce + Vector3.down * GRAVITY * groundedGravityScale, groundNormal) * groundNormal;
         float normalForce = forceAlongNormal.magnitude;
@@ -139,8 +139,7 @@ public class Controller : MonoBehaviour
 
     protected void ApplyGravity()
     {
-        if (contacts) accumulatedForce += Vector3.down * GRAVITY * groundedGravityScale;
-        else accumulatedForce += Vector3.down * GRAVITY;
+        accumulatedForce += Vector3.down * GRAVITY * groundedGravityScale;
     }
 
 
