@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
 {
-    const float GRAVITY = 980.0f;
+    protected const float GRAVITY = 980.0f;
 
-    DefaultPlayerActions defaultPlayerActions;
+    protected DefaultPlayerActions defaultPlayerActions;
 
     [Header("Physics Properties")]
     [SerializeField]
@@ -20,35 +20,43 @@ public class Controller : MonoBehaviour
     protected float maxSpeed = float.MaxValue;
     [SerializeField]
     protected float maxAcceleration = float.MaxValue;
+    /// <summary>
+    /// Minimun dot product of up vector and walkable surface normal.
+    /// </summary>
     [SerializeField]
     protected float slopeThreshold = float.MinValue;
+    [SerializeField]
+    protected float gravityScale = 2.0f;
+    [SerializeField]
+    protected float airControlMultiplier = .5f;
     protected Vector3 accumulatedForce;
-    public Vector3 componentVelocity;
+    protected Vector3 componentVelocity;
     protected Vector3 groundNormal;
-    public bool grounded = false;
-    public bool contacts = false;
+    /// <summary>
+    /// Is the player standing on a walkable surface?
+    /// </summary>
+    protected bool grounded = false;
+    /// <summary>
+    /// Is the character touching aother collider?
+    /// </summary>
+    protected bool contacts = false;
+    protected float baseWalkingFriction;
 
     [Header("Input")]
     [SerializeField]
     protected float inputScale = 50.0f;
     protected float pendingInput;
 
-
-    protected float baseWalkingFriction;
-    public float probeDistance = 1.0f;
-    public float groundedGravityScale = 2.0f;
-    public float airControlMultiplier = .5f;
-
     protected void Awake()
     {
+        // Setup player actions.
         defaultPlayerActions = new DefaultPlayerActions();
         defaultPlayerActions.Enable();
-
 
         defaultPlayerActions.DefaultActionMap.Jump.performed += StartJump;
         defaultPlayerActions.DefaultActionMap.Jump.canceled += CancelJump;
 
-
+        // Set base property values.
         baseWalkingFriction = walkingFritction;
     }
 
@@ -57,6 +65,10 @@ public class Controller : MonoBehaviour
         UpdatePhysics(Time.fixedDeltaTime);
     }
 
+    /// <summary>
+    /// Update the physics state, accouting for gravity, input, and friction.
+    /// </summary>
+    /// <param name="deltaTime"></param>
     void UpdatePhysics(float deltaTime)
     {
 
@@ -88,33 +100,44 @@ public class Controller : MonoBehaviour
         accumulatedForce = Vector3.zero;
     }
 
+
+    /// <summary>
+    /// Add player action move value to Pending Input.
+    /// </summary>
     protected void AddInput()
     {
         pendingInput += defaultPlayerActions.DefaultActionMap.Move.ReadValue<float>();  
     }
 
-
+    /// <summary>
+    /// Apply friction force.
+    /// </summary>
     protected void ApplyFriction()
     {
         float useFriction = 0.0f;
         if (contacts)
         {
+            // If we are touching a surface but not grounded, friction should resist movement against the surface but not sliding down it.
             useFriction = Vector3.Dot(groundNormal, pendingInput * transform.right) < 0 ? walkingFritction : 0f;
         }
         if (grounded)
         {
+            // If we are grounded, just use the appropriate friction multiplier.
             useFriction = Mathf.Abs(pendingInput) > 0.01f ? walkingFritction : brakingFritction;
         }
 
         print("Fr: " + useFriction);
 
-        Vector3 forceAlongNormal = Vector3.Dot(accumulatedForce + Vector3.down * GRAVITY * groundedGravityScale, groundNormal) * groundNormal;
+        Vector3 forceAlongNormal = Vector3.Dot(accumulatedForce + Vector3.down * GRAVITY * gravityScale, groundNormal) * groundNormal;
         float normalForce = forceAlongNormal.magnitude;
         Vector3 frictionForce = useFriction * normalForce * -componentVelocity;
         frictionForce = Vector3.ProjectOnPlane(frictionForce, groundNormal);
         accumulatedForce += frictionForce;
     }
 
+    /// <summary>
+    /// Applie Pending Input as force, the clears Pending Input.
+    /// </summary>
     protected void ApplyInput()
     {
         print("ApplyInput");
@@ -122,8 +145,6 @@ public class Controller : MonoBehaviour
         Vector3 force = transform.right * pendingInput * inputScale;
         if (contacts)
         {
-            //force += Vector3.ProjectOnPlane(groundNormal, -force.normalized) * 999; 
-
             // Move parallel to floor.
             float magnitude = force.magnitude;
             force = Vector3.ProjectOnPlane(force, groundNormal);
@@ -137,26 +158,29 @@ public class Controller : MonoBehaviour
         pendingInput = 0.0f;
     }
 
+
+    /// <summary>
+    /// Apply gravity force.
+    /// </summary>
     protected void ApplyGravity()
     {
-        accumulatedForce += Vector3.down * GRAVITY * groundedGravityScale;
+        accumulatedForce += Vector3.down * GRAVITY * gravityScale;
     }
 
-
+    /// <summary>
+    /// Collision correction and normal impulse for all contacts.
+    /// </summary>
+    /// <param name="collision"></param>
     protected void HandleCollision(Collision collision)
     {
         foreach(ContactPoint contact in collision.contacts)
         {
-            print("loop");
             Vector3 correction;
             float distance;
             Physics.ComputePenetration(GetComponent<CapsuleCollider>(), transform.position, transform.rotation, collision.collider, collision.transform.position, collision.transform.rotation, out correction, out distance);
 
-            print("Normal" + contact.normal);
-
             if (distance > 0)
             {
-                contacts = true;
                 // Only apply the correction if it is valid.
                 transform.Translate(correction * distance);
 
@@ -165,26 +189,21 @@ public class Controller : MonoBehaviour
                 if (!grounded) groundNormal = Vector3.zero;
                 groundNormal += contact.normal;
                 
-
                 if(Vector3.Dot(contact.normal, Vector3.up) >= slopeThreshold)
                 {
                     grounded = true;
                 }
-                else
-                {
 
-                }
+                contacts = true;
             }
         }
 
         groundNormal.Normalize();
-        print("Grnd: " + groundNormal);
     }
 
 
     protected void OnCollisionEnter(Collision collision)
     {
-        print("Collide");
         HandleCollision(collision);
     }
 

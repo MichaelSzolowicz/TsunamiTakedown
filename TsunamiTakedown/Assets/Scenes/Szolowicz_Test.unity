@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 100
   walkingFritction: 0.08
-  brakingFritction: 0.1
+  brakingFritction: 0.3
   maxSpeed: 3.4028235e+38
   maxAcceleration: 3.4028235e+38
   slopeThreshold: 0.9
