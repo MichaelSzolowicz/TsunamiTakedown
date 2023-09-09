@@ -35,6 +35,15 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f1c39e9-0d5f-4bdf-83b3-7c981b234015"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -70,6 +79,17 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""47622d43-39e5-4c04-8344-6e56a6b4721a"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -79,6 +99,7 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
         // DefaultActionMap
         m_DefaultActionMap = asset.FindActionMap("DefaultActionMap", throwIfNotFound: true);
         m_DefaultActionMap_Move = m_DefaultActionMap.FindAction("Move", throwIfNotFound: true);
+        m_DefaultActionMap_Jump = m_DefaultActionMap.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,11 +160,13 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
     private readonly InputActionMap m_DefaultActionMap;
     private IDefaultActionMapActions m_DefaultActionMapActionsCallbackInterface;
     private readonly InputAction m_DefaultActionMap_Move;
+    private readonly InputAction m_DefaultActionMap_Jump;
     public struct DefaultActionMapActions
     {
         private @DefaultPlayerActions m_Wrapper;
         public DefaultActionMapActions(@DefaultPlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_DefaultActionMap_Move;
+        public InputAction @Jump => m_Wrapper.m_DefaultActionMap_Jump;
         public InputActionMap Get() { return m_Wrapper.m_DefaultActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -156,6 +179,9 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
                 @Move.started -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_DefaultActionMapActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_DefaultActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -163,6 +189,9 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -170,5 +199,6 @@ public partial class @DefaultPlayerActions : IInputActionCollection2, IDisposabl
     public interface IDefaultActionMapActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
