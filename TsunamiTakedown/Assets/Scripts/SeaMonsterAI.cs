@@ -24,10 +24,17 @@ public class SeaMonsterAI : MonoBehaviour
     private Vector3 normalHeight;
 
     //Variables for positions
-    public GameObject leftBoundCube;
-    public GameObject rightBoundCube;
-    public GameObject bottomBoundCube;
-    public GameObject player;
+    [SerializeField]
+    private GameObject leftBoundCube;
+
+    [SerializeField]
+    private GameObject rightBoundCube;
+
+    [SerializeField]
+    private GameObject bottomBoundCube;
+
+    [SerializeField]
+    private GameObject player;
 
     //Bools to check state of monster
     private Vector3 playerTargetPos;
@@ -38,11 +45,14 @@ public class SeaMonsterAI : MonoBehaviour
     //Booleans
     private bool bounce = false;
 
+    //Checks dashcount
+    private int dashCount;
+
     //State checker
-    public string enemyState;
+    private string enemyState;
 
     //Checking which attack is being done
-    private int attackType;
+    public int attackType;
     
     // Start is called before the first frame update
     void Start()
@@ -55,6 +65,8 @@ public class SeaMonsterAI : MonoBehaviour
         leftBound = leftBoundCube.transform.position;
         rightBound = rightBoundCube.transform.position;
 
+        dashCount = 0;
+
         enemyState = "swimming";
     }
 
@@ -66,7 +78,15 @@ public class SeaMonsterAI : MonoBehaviour
         }       
         else
         {
-            jumpAttack();
+            if (attackType == 1)
+            {
+                jumpAttack();
+            }
+            else if (attackType == 2)
+            {
+                rushAttack();
+            }
+            
         }
     }
 
@@ -85,7 +105,8 @@ public class SeaMonsterAI : MonoBehaviour
 
             else
             {
-                //Start rush protocol here
+                playerTargetPos = player.transform.position;
+                lungePrep();
             }
         }
     }
@@ -96,7 +117,7 @@ public class SeaMonsterAI : MonoBehaviour
     public void Bounce()
     {
         //Check which way the sea-monster is currently going and then reset it
-        if (bounce == false)
+        if (bounce == false && curPos.x >= rightBound.x)
         {
             bounce = true;
 
@@ -113,7 +134,7 @@ public class SeaMonsterAI : MonoBehaviour
                 jumpHeight.y += arcHeight;
             }
         }
-        else
+        else if (bounce == true && curPos.x <= leftBound.x)
         {
             bounce = false;
         }
@@ -247,4 +268,160 @@ public class SeaMonsterAI : MonoBehaviour
             }
         }
     }
+
+    public void lungePrep()
+    {
+        if(curPos.y < playerTargetPos.y)
+        {
+            Vector3 tempPos = curPos;
+            tempPos.y += speed * .2f * Time.deltaTime;
+            curPos = tempPos;
+        }
+        
+        else
+        {
+            if (curPos.x < (leftBound.x - 14) || curPos.x > (rightBound.x + 14))
+            {
+                enemyState = "attacking";
+                playerTargetPos = player.transform.position;
+
+                if (bounce != true)
+                {
+                    bounce = true;
+                }
+                else
+                {
+                    bounce = false;
+                }
+            }   
+        }
+    }
+
+    public void rushAttack()
+    {
+        Vector3 tempPos = curPos;
+        if (enemyState == "attacking")
+        {
+            if (bounce == true)
+            {
+                if (leftBound.x + 2 < tempPos.x)
+                {
+                    tempPos.x -= speed * 1.2f * Time.deltaTime;
+                }
+                else
+                {
+                    /*if(this.GetComponent<MonsterStats>().healthPoints < this.GetComponent<MonsterStats>().maxHP / 2)
+                    {
+                        if(dashCount > 0)
+                        {
+                            dashCount = 0;
+                            enemyState = "falling";
+                        }
+                        bounce = false;
+                    }*/
+                    enemyState = "falling";
+                }
+            }
+            else
+            {
+                if (rightBound.x - 2 > tempPos.x)
+                {
+                    tempPos.x += speed * 1.2f * Time.deltaTime;
+                }
+                else
+                {
+                    enemyState = "falling";
+                }
+            }
+            
+        }
+
+        if(enemyState == "falling")
+        {
+            if (speed > baseSpeed)
+            {
+                speed--;
+            }
+
+            if (bounce == true)
+            {
+                tempPos.x -= speed * 1.2f * Time.deltaTime;
+
+                if(tempPos.x < leftBound.x)
+                {
+                    if (tempPos.y > normalHeight.y)
+                    {
+                        tempPos.y -= speed * Time.deltaTime;
+                    }
+                }
+
+                else
+                {
+                    tempPos.y -= speed * .2f * Time.deltaTime;
+                }
+            }
+
+            else if (bounce == false)
+            {
+                tempPos.x += speed * 1.2f * Time.deltaTime;
+
+                if (tempPos.x > rightBound.x)
+                {
+                    if (tempPos.y > normalHeight.y)
+                    {
+                        tempPos.y -= speed * Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    tempPos.y -= speed * .2f * Time.deltaTime;
+                }
+            }
+
+            if (speed <= baseSpeed && tempPos.y <= normalHeight.y)
+            {
+                if(this.GetComponent<MonsterStats>().healthPoints <= (this.GetComponent<MonsterStats>().maxHP / 2))
+                {
+                    switch (dashCount)
+                    {
+                        case 0:
+                            enemyState = "rushing";
+                            dashCount++;
+                            speed = maxSpeed * 1.175f;
+                            break;
+
+                        case 1:
+                            if(this.GetComponent<MonsterStats>().healthPoints <= (this.GetComponent<MonsterStats>().maxHP / 4)) 
+                            {
+                                enemyState = "rushing";
+                                dashCount++;
+                                speed = maxSpeed * 1.3f;
+                                break;
+                            }
+                            else
+                            {
+                                enemyState = "recovering";
+                                dashCount = 0;
+                                break;
+                            }
+
+                        default:
+                            enemyState = "recovering";
+                            dashCount = 0;
+                            break;
+                    }
+                }
+
+                //Check to see the current state of the player
+                else
+                {
+                    //Just recover
+                    enemyState = "recovering";
+                }
+            }
+        }
+
+        curPos = tempPos;
+    }
+        
 }
