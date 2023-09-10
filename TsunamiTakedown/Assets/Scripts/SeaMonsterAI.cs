@@ -44,6 +44,9 @@ public class SeaMonsterAI : MonoBehaviour
     private Vector3 playerTargetPos;
     private Vector3 jumpStartPos;
 
+    private Quaternion baseRotation;
+    private Quaternion secondRotation;
+
     public int arcHeight;
 
     //Booleans
@@ -70,6 +73,10 @@ public class SeaMonsterAI : MonoBehaviour
         rightBound = rightBoundCube.transform.position;
 
         dashCount = 0;
+
+        baseRotation = this.transform.rotation;
+        secondRotation = baseRotation;
+        secondRotation.y -= 180f;
 
         enemyState = "swimming";
     }
@@ -165,9 +172,7 @@ public class SeaMonsterAI : MonoBehaviour
         {
             bounce = true;
 
-            Vector3 tempBounce = leftBound;
-            tempBounce.y = transform.rotation.y;
-            transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
+            transform.rotation = secondRotation;
 
             if (enemyState == "ready")
             {
@@ -176,9 +181,7 @@ public class SeaMonsterAI : MonoBehaviour
         }
         else if (bounce == true && curPos.x <= leftBound.x)
         {
-            Vector3 tempBounce = rightBound;
-            tempBounce.y = transform.rotation.y;
-            transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
+            transform.rotation = baseRotation;
 
             bounce = false;
         }
@@ -371,16 +374,12 @@ public class SeaMonsterAI : MonoBehaviour
                 if (bounce != true)
                 {
                     bounce = true;
-                    Vector3 tempBounce = leftBound;
-                    tempBounce.y = transform.rotation.y;
-                    transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
+                    transform.rotation = secondRotation;
                 }
                 else
                 {
                     bounce = false;
-                    Vector3 tempBounce = rightBound;
-                    tempBounce.y = transform.rotation.y;
-                    transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
+                    transform.rotation = baseRotation;
                 }
             }   
         }
