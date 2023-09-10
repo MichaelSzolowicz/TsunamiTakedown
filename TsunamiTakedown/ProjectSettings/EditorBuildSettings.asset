@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 3db1837cc97a95e4c98610966fac2b0b
+  - enabled: 1
+    path: Assets/Scenes/BradburyTest.unity
+    guid: d2af9354d77cdb04fa72d8459c19e597
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 76a717020ce16134986e063bff024d74
   m_configObjects: {}

@@ -29,10 +29,10 @@ public class TorpedoDrive : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        torpedoMove();
+        TorpedoMove();
     }
 
-    public void torpedoMove()
+    public void TorpedoMove()
     {
 
         if (timer > 0)
