@@ -10,6 +10,7 @@ TagManager:
   - Homing
   - Invincibility
   - HealingKit
+  - SMProjectile
   layers:
   - Default
   - TransparentFX

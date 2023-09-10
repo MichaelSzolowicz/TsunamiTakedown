@@ -152,5 +152,22 @@ public class playerStats : MonoBehaviour
             Invoke("RemoveHoming", 5f);
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "SMProjectile")
+        {
+            if (invincibility != true)
+            {
+                hp--;
+                invincible = true;
+                Invoke("RemoveInvincible", 2f);
+
+                if (hp <= 0)
+                {
+                    GameLost();
+                }
+
+                collision.gameObject.GetComponent<powerUp>().SelfDestruct();
+            }
+        }
     }
 }
