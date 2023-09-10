@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4249563865427302017}
   - component: {fileID: 4249563865427302018}
   - component: {fileID: 4249563865427302019}
+  - component: {fileID: 5774243788229789047}
   - component: {fileID: 4249563865427302022}
   m_Layer: 0
   m_Name: Player
@@ -69,6 +70,23 @@ MonoBehaviour:
   gravityScale: 3
   airControlMultiplier: 0.8
   inputScale: 5000
+--- !u!114 &5774243788229789047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249563865427302016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8308a52b9f18ad948af0fe5372a136fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  torpPrefab: {fileID: 8190151038308500363, guid: bcee44996a1860a4da9879629e357672, type: 3}
+  _camera: {fileID: 0}
+  rot: {x: 0, y: 0, z: 0, w: 0}
+  torpedoSS: 0
+  playerState: 
 --- !u!54 &4249563865427302022
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,3 +198,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatedTransform: {fileID: 7652024015206346357}
+  probeDepth: 50
