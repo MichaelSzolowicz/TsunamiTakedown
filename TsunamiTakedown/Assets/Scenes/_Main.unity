@@ -1490,11 +1490,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   torpPrefab: {fileID: 8190151038308500363, guid: bcee44996a1860a4da9879629e357672, type: 3}
-  _camera: {fileID: 508373484}
+  _camera: {fileID: 0}
   rot: {x: 0, y: 0, z: 0, w: 0}
-  torpedoSS: 20
+  torpedoSS: 0
   playerState: 
-  rotator: {fileID: 2179202335928130368}
+  rotator: {fileID: 0}
 --- !u!1001 &1495758523
 PrefabInstance:
   m_ObjectHideFlags: 0
