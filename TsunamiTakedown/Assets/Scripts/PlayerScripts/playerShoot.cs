@@ -25,7 +25,7 @@ public class playerShoot : MonoBehaviour
     //Tracks cursor target for shooting
     private Vector3 cursorTarget;
 
-    //Torpedo shot speed
+    //Torpedo shot speed 8
     public float torpedoSS;
 
     private Quaternion ogRotation;
