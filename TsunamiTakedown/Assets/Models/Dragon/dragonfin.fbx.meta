@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9523d7683e2ef384aaa616a0248de30e
+guid: 88ab303b292431844b7882507c79ee8c
 ModelImporter:
   serializedVersion: 20300
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: bd55845276b5c6f49b1ead3c58d053f2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wave_side
-    second: {fileID: 2100000, guid: 0bd32074eec2b514fabacf6430ecc112, type: 2}
+      name: aiStandardSurface1
+    second: {fileID: 2100000, guid: 85e5dbbc736744d4b9f83713300d5c88, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -44,7 +39,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 6
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -95,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 6
+    globalScale: 100
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

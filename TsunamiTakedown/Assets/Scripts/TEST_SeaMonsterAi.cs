@@ -57,9 +57,13 @@ public class TEST_SeaMonsterAi : MonoBehaviour
     //Checking which attack is being done
     public int attackType;
 
+    public Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
+        anim.SetInteger("state", 1);
+
         //Set the standard height for the monster
         normalHeight = curPos;
         diveHeight = bottomBoundCube.transform.position;
@@ -75,20 +79,25 @@ public class TEST_SeaMonsterAi : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
         if (enemyState != "Dying")
         {
             if (enemyState != "attacking" && enemyState != "falling")
             {
+                anim.SetInteger("state", 1);
                 speedUp();
             }
             else
             {
                 if (attackType == 1)
                 {
+                    anim.SetInteger("state", 3);
                     jumpAttack();
                 }
                 else if (attackType == 2)
                 {
+                    anim.SetInteger("state", 2);
                     rushAttack();
                 }
 
@@ -251,6 +260,7 @@ public class TEST_SeaMonsterAi : MonoBehaviour
     /// </summary>
     public void jumpAttack()
     {
+
         if (enemyState == "falling")
         {
             Vector3 nextPos = Vector3.MoveTowards(transform.position, playerTargetPos, (speed * .83f) * Time.deltaTime);
@@ -310,6 +320,10 @@ public class TEST_SeaMonsterAi : MonoBehaviour
 
     public void rushAttack()
     {
+
+
+        print("rush attack");
+
         Vector3 tempPos = curPos;
         if (enemyState == "attacking")
         {

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7173025063585446813}
   - component: {fileID: 4931233799673155415}
   - component: {fileID: 2367182521705317437}
+  - component: {fileID: 7712539348441578226}
   m_Layer: 0
   m_Name: Tsunami_2
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6876925659399368322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0bd32074eec2b514fabacf6430ecc112, type: 2}
-  - {fileID: 2100000, guid: bd55845276b5c6f49b1ead3c58d053f2, type: 2}
+  - {fileID: 2100000, guid: 7e5dc9303fc76d346ab74aff2303f2f8, type: 2}
+  - {fileID: 2100000, guid: bf72a3fe5a1ec834daa0809b803e77f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,6 +96,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55fa0fe789bf5174195bc6533b629aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 12
   lifetime: 28
   changeDirection: 0
+--- !u!64 &7712539348441578226
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876925659399368322}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5305850023332112338, guid: e1936c9d484db6d4caca20138180bdc8, type: 3}
