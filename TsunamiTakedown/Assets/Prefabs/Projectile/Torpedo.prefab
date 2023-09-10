@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 24
+  burstForce: 2000
 --- !u!1 &8332210966658896660
 GameObject:
   m_ObjectHideFlags: 0
