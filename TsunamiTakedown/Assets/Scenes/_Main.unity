@@ -1593,7 +1593,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 88ab303b292431844b7882507c79ee8c, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88ab303b292431844b7882507c79ee8c, type: 3}
       propertyPath: m_LocalScale.x
@@ -1613,11 +1613,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88ab303b292431844b7882507c79ee8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.32
+      value: -3.85
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88ab303b292431844b7882507c79ee8c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.67
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88ab303b292431844b7882507c79ee8c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2544,8 +2544,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5169b7d0f63df4eb852cca5d4c2b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 1
-  maxHP: 1
+  healthPoints: 20
+  maxHP: 20
 --- !u!4 &496627940330632932
 Transform:
   m_ObjectHideFlags: 0
@@ -2554,7 +2554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496627940330632952}
   m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: -1.4, y: 30.5, z: -0.000060983}
+  m_LocalPosition: {x: -103.9, y: 14.5, z: -0.000060983}
   m_LocalScale: {x: 4.2047687, y: 4.2047687, z: 4.2047687}
   m_Children:
   - {fileID: 190485292}
@@ -2568,19 +2568,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496627940330632952}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 298d9416b1762194fa68c25f3e88d8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 75
   leftBoundCube: {fileID: 496627942071029394}
   rightBoundCube: {fileID: 496627941204110658}
   bottomBoundCube: {fileID: 496627940710881656}
   player: {fileID: 4249563865529159108}
-  arcHeight: 0
+  projectiles: {fileID: 0}
+  arcHeight: 10
   enemyState: 
   attackType: 0
+  anim: {fileID: 190485291}
 --- !u!23 &496627940330632934
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2659,7 +2661,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496627940330632952}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f93e535aeb347a4c8649826efcab7cb, type: 3}
   m_Name: 
@@ -2796,7 +2798,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496627940710881656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -70, y: -7.9, z: 0}
+  m_LocalPosition: {x: -70, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496627940699740191}

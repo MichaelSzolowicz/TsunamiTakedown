@@ -16,9 +16,9 @@ public class SeaMonsterAI : MonoBehaviour
     private Vector3 jumpHeight;
 
     //Variable for speed and direction
-    public float speed = 6f;
-    private float baseSpeed = 6f;
-    private float maxSpeed = 23;
+    public float speed = 75f;
+    private float baseSpeed = 75f;
+    private float maxSpeed = 80;
 
     //Variables for positions
     private Vector3 diveHeight;
@@ -60,10 +60,14 @@ public class SeaMonsterAI : MonoBehaviour
 
     //Checking which attack is being done
     public int attackType;
-    
+
+    public Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
+
+
         //Set the standard height for the monster
         normalHeight = curPos;
         diveHeight = bottomBoundCube.transform.position;
@@ -87,16 +91,22 @@ public class SeaMonsterAI : MonoBehaviour
         {
             if (enemyState != "attacking" && enemyState != "falling")
             {
+                print("x1");
+                anim.SetInteger("state", 1);
                 speedUp();
             }
             else
             {
                 if (attackType == 1)
                 {
+                    print("x3");
+                    anim.SetInteger("state", 3);
                     jumpAttack();
                 }
                 else if (attackType == 2)
                 {
+                    print("x2");
+                    anim.SetInteger("state", 2);
                     rushAttack();
                 }
             }
@@ -203,8 +213,10 @@ public class SeaMonsterAI : MonoBehaviour
                 tempPos.x -= speed * Time.deltaTime;
             }
 
+
+
             //Check if max speed is hit and dive
-            if (enemyState == "diving" && this.transform.position.y > diveHeight.y)
+            if (enemyState == "diving")
             {
                 tempPos.y -= speed / 4 * Time.deltaTime;
 
