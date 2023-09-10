@@ -26,7 +26,7 @@ public class playerShoot : MonoBehaviour
     private Vector3 cursorTarget;
 
     //Torpedo shot speed 8
-    public float torpedoSS;
+    private float torpedoSS = 1f;
 
     private Quaternion ogRotation;
 
@@ -86,6 +86,15 @@ public class playerShoot : MonoBehaviour
         {
             cursorTarget = mousePosition();
             //Cursor.lockState = CursorLockMode.Locked;
+            if (this.gameObject.GetComponent<playerStats>().rapidFire == true)
+            {
+                torpedoSS = 20f;
+            }
+            else
+            {
+                torpedoSS = 5f;
+            }
+            
             playerState = "Readying";
         }
     }
@@ -104,7 +113,7 @@ public class playerShoot : MonoBehaviour
         Quaternion rot = Quaternion.LookRotation(dir);
 
         // slerp to the desired rotation over time
-        transform.rotation = Quaternion.Slerp(transform.rotation, rot, torpedoSS * 2 * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, torpedoSS * (torpedoSS*2) * Time.deltaTime);
 
         float angleCheck = Quaternion.Angle(transform.rotation, rot);
         //find a way to check when its done rotating so it can shoot
