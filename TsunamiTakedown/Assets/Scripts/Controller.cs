@@ -227,11 +227,13 @@ public class Controller : MonoBehaviour
 
     protected void OnCollisionEnter(Collision collision)
     {
+        print("no.");
         HandleCollision(collision);
     }
 
     protected void OnCollisionStay(Collision collision)
     {
+        print("no.");
         HandleCollision(collision);
     }
 
