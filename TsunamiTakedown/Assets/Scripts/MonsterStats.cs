@@ -17,6 +17,11 @@ public class MonsterStats : MonoBehaviour
         if (collision.gameObject.tag == "Torpedo")
         {
             healthPoints--;
+
+            if (healthPoints <= 0)
+            {
+                this.gameObject.GetComponent<SeaMonsterAI>().enemyState = "Dying";
+            }
         }
     }
 }

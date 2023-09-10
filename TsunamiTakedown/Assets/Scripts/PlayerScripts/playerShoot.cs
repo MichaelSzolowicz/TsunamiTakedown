@@ -45,13 +45,13 @@ public class playerShoot : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        stateManaging();
+        StateManaging();
     }
 
     /// <summary>
     /// Choose which state action to run based on player's current state
     /// </summary>
-    public void stateManaging()
+    public void StateManaging()
     {
         if (playerState == "Aim")
         {

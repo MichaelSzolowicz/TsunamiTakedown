@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Author: Shawn Bradbury
+ * Date: 09/09/2023
+ * The job of this script is to push the torpedo forward, and explode it after x amount of time.
+ */
 public class playerStats : MonoBehaviour
 {
     [SerializeField]
@@ -10,6 +15,9 @@ public class playerStats : MonoBehaviour
     [SerializeField]
     private int hp;
 
+    [SerializeField]
+    private GameObject gameOverUI;
+
     private bool invincible = false;
 
     void Start()
@@ -17,9 +25,15 @@ public class playerStats : MonoBehaviour
         hp = maxHP;
     }
 
-    void removeInvincible()
+    void RemoveInvincible()
     {
         invincible = false;
+    }
+
+    void GameLost()
+    {
+        gameOverUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     void OnTriggerEnter(Collider collision)
@@ -28,7 +42,12 @@ public class playerStats : MonoBehaviour
         {
             hp--;
             invincible = true;
-            Invoke("removeInvincible", 2f);
+            Invoke("RemoveInvincible", 2f);
+
+            if (hp <= 0)
+            {
+                GameLost();
+            }
         }
     }
 }

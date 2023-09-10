@@ -25,10 +25,10 @@ public class TorpedoDrive : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        torpedoMove();
+        TorpedoMove();
     }
 
-    public void torpedoMove()
+    public void TorpedoMove()
     {
         m_Rigidbody.velocity = transform.forward * speed;
 
