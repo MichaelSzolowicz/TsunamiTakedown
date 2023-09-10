@@ -47,6 +47,8 @@ public class Controller : MonoBehaviour
     protected float inputScale = 50.0f;
     protected float pendingInput;
 
+    protected float startZ;
+
     protected void Awake()
     {
         // Setup player actions.
@@ -58,6 +60,8 @@ public class Controller : MonoBehaviour
 
         // Set base property values.
         baseWalkingFriction = walkingFritction;
+
+        startZ = transform.position.z;
     }
 
     private void FixedUpdate()
@@ -109,6 +113,9 @@ public class Controller : MonoBehaviour
         }
 
         transform.position += deltaPos;
+        Vector3 temp = transform.position;
+        temp.z = startZ;
+        transform.position = temp;
 
         // Zero out forces.
         accumulatedForce = Vector3.zero;
