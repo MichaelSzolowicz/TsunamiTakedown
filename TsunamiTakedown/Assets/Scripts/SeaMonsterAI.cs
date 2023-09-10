@@ -37,6 +37,9 @@ public class SeaMonsterAI : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
+    [SerializeField]
+    private GameObject projectiles;
+
     //Bools to check state of monster
     private Vector3 playerTargetPos;
     private Vector3 jumpStartPos;
@@ -98,6 +101,23 @@ public class SeaMonsterAI : MonoBehaviour
         }
     }
 
+    public void SpikeSpawning()
+    {
+        GameObject leftSpike = Instantiate(projectiles);
+        Vector3 tempPos = leftSpike.transform.position;
+
+        tempPos.x = Random.RandomRange(leftBound.x, transform.position.x);
+        tempPos.y = rightBound.y;
+        tempPos.z = 0;
+
+        leftSpike.transform.position = tempPos;
+
+        GameObject rightSpike = Instantiate(projectiles);
+        tempPos.x = Random.RandomRange(transform.position.x, rightBound.x);
+
+        rightSpike.transform.position = tempPos;
+    }
+
     /// <summary>
     /// Monster needs to go back and forth multiple times
     /// </summary>
@@ -120,6 +140,22 @@ public class SeaMonsterAI : MonoBehaviour
     }
 
     /// <summary>
+    /// Set the actions after ready into a function so it could be called for a second attack at lower hp
+    /// </summary>
+    public void readyAttack()
+    {
+        enemyState = "attacking";
+        playerTargetPos = player.transform.position;
+        jumpStartPos = curPos;
+        arcHeight = Random.Range(10, 15);
+
+        jumpHeight.x = (playerTargetPos.x + jumpStartPos.x) / 2;
+
+        jumpHeight.y = playerTargetPos.y;
+        jumpHeight.y += arcHeight;
+    }
+
+    /// <summary>
     /// Ping pongs the monster back and forth when they reach the edge of their movement
     /// </summary>
     public void Bounce()
@@ -129,21 +165,21 @@ public class SeaMonsterAI : MonoBehaviour
         {
             bounce = true;
 
+            /*Quaternion tempRotY = transform.rotation;
+            tempRotY.y = transform.rotation.y - 90f;
+            transform.rotation = tempRotY;*/
+
             if (enemyState == "ready")
             {
-                enemyState = "attacking";
-                playerTargetPos = player.transform.position;
-                jumpStartPos = curPos;
-                arcHeight = Random.Range(10, 15);
-
-                jumpHeight.x = (playerTargetPos.x + jumpStartPos.x) / 2;
-
-                jumpHeight.y = playerTargetPos.y;
-                jumpHeight.y += arcHeight;
+                readyAttack();
             }
         }
         else if (bounce == true && curPos.x <= leftBound.x)
         {
+            /*Quaternion tempRotY = transform.rotation;
+            tempRotY.y = transform.rotation.y + 45f;
+            transform.rotation = tempRotY;*/
+
             bounce = false;
         }
     }
@@ -195,7 +231,46 @@ public class SeaMonsterAI : MonoBehaviour
 
             else if (speed <= baseSpeed && tempPos.y <= normalHeight.y)
             {
-                enemyState = "swimming";
+                if (attackType == 1)
+                {
+                    if(this.GetComponent<MonsterStats>().healthPoints <= this.GetComponent<MonsterStats>().maxHP / 2)
+                    {
+                        SpikeSpawning();
+
+                        //Check if health is below the threshold
+                        if (this.GetComponent<MonsterStats>().healthPoints <= this.GetComponent<MonsterStats>().maxHP / 4)
+                        {
+                            //If still have a dash reset back to jumping again
+                            if (dashCount == 0)
+                            {
+                                dashCount++;
+                                speed = maxSpeed;
+                                readyAttack();
+                            }
+
+                            else
+                            {
+                                enemyState = "swimming";
+                                dashCount = 0;
+                            }
+                        }
+
+                        else
+                        {
+                            enemyState = "swimming";
+                        }
+                    }
+
+                    else
+                    {
+                        enemyState = "swimming";
+                    }
+                }
+
+                else
+                {
+                    enemyState = "swimming";
+                }
             }
         }
 
