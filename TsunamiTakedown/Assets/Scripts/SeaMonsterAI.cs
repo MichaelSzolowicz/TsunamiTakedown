@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
     /*
      * Author: Bradbury, Shawn
@@ -50,7 +49,7 @@ public class SeaMonsterAI : MonoBehaviour
     private int dashCount;
 
     //State checker
-    public string enemyState;
+    private string enemyState;
 
     //Checking which attack is being done
     public int attackType;
@@ -73,29 +72,21 @@ public class SeaMonsterAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (enemyState != "Dying")
+        if (enemyState != "attacking" && enemyState != "falling")
         {
-            if (enemyState != "attacking" && enemyState != "falling")
-            {
-                speedUp();
-            }
-            else
-            {
-                if (attackType == 1)
-                {
-                    jumpAttack();
-                }
-                else if (attackType == 2)
-                {
-                    rushAttack();
-                }
-
-            }
-        }
-
+            speedUp();
+        }       
         else
         {
-            MonsterDeath();
+            if (attackType == 1)
+            {
+                jumpAttack();
+            }
+            else if (attackType == 2)
+            {
+                rushAttack();
+            }
+            
         }
     }
 
@@ -432,26 +423,5 @@ public class SeaMonsterAI : MonoBehaviour
 
         curPos = tempPos;
     }
-    
-    /// <summary>
-    /// cause the monster to dive then end the game
-    /// </summary>
-    public void MonsterDeath()
-    {
-        if (speed > baseSpeed)
-        {
-            speed = baseSpeed;
-        }
-
-        //Start by diving the monster down.
-        Vector3 tempPos = curPos;
-        tempPos.y -= speed * .5f * Time.deltaTime;
-        curPos = tempPos;
-
-        //Then once the monster is low enough, move to the victory scene
-        if (curPos.y < diveHeight.y)
-        { 
-            SceneManager.LoadScene(2);
-        }
-    }
+        
 }

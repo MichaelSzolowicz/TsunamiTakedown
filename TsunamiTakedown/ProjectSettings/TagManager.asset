@@ -6,10 +6,6 @@ TagManager:
   tags:
   - Torpedo
   - SeaMonster
-  - rapidFire
-  - Homing
-  - Invincibility
-  - HealingKit
   layers:
   - Default
   - TransparentFX
