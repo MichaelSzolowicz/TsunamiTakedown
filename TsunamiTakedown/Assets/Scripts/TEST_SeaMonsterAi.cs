@@ -181,6 +181,8 @@ public class TEST_SeaMonsterAi : MonoBehaviour
             {
                 tempPos.y -= speed / 4 * Time.deltaTime;
 
+                // DIVING STATE GOES HERE
+
                 if (tempPos.y <= diveHeight.y)
                 {
                     enemyState = "ready";
