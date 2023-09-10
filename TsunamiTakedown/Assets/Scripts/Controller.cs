@@ -91,9 +91,23 @@ public class Controller : MonoBehaviour
         {
             componentVelocity = componentVelocity.normalized * maxSpeed;
         }
+        
+
 
         // Appply delta position.
         Vector3 deltaPos = componentVelocity * deltaTime;
+
+        RaycastHit hit;
+        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+        Vector3 sphere1 = transform.position - ((capsule.height / 2) + capsule.radius) * transform.up;
+        Vector3 sphere2 = transform.position + ((capsule.height / 2) + capsule.radius) * transform.up;
+
+        if (Physics.Linecast(transform.position, transform.position + deltaPos, out hit))
+        {
+            print("Hit: " + hit.transform);
+            deltaPos += hit.normal * (deltaPos.magnitude - hit.distance);
+        }
+
         transform.position += deltaPos;
 
         // Zero out forces.
@@ -143,14 +157,14 @@ public class Controller : MonoBehaviour
         print("ApplyInput");
 
         Vector3 force = transform.right * pendingInput * inputScale;
-        if (contacts)
+        if (grounded)
         {
             // Move parallel to floor.
             float magnitude = force.magnitude;
             force = Vector3.ProjectOnPlane(force, groundNormal);
             force = force.normalized * magnitude;
         }
-        else
+        else if(!contacts)
         {
             force *= airControlMultiplier;
         }
@@ -188,6 +202,8 @@ public class Controller : MonoBehaviour
 
                 if (!grounded) groundNormal = Vector3.zero;
                 groundNormal += contact.normal;
+
+                print(Vector3.Dot(contact.normal, Vector3.up));
                 
                 if(Vector3.Dot(contact.normal, Vector3.up) >= slopeThreshold)
                 {
@@ -228,5 +244,21 @@ public class Controller : MonoBehaviour
     protected void CancelJump(InputAction.CallbackContext context)
     {
         walkingFritction = baseWalkingFriction;
+    }
+
+
+    public Vector3 GetVelocity()
+    {
+        return componentVelocity;
+    }
+
+    public float GetInput()
+    {
+        return pendingInput;
+    }
+
+    public bool GetContact()
+    {
+        return contacts;
     }
 }

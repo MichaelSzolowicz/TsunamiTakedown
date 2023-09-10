@@ -14,12 +14,16 @@ public class TorpedoDrive : MonoBehaviour
     [SerializeField]
     private float speed = 2.3f;
 
+    public float burstForce = 500;
+
     private int timer = 200;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        m_Rigidbody.AddForce(transform.forward * burstForce);
     }
 
     // Update is called once per frame
@@ -30,7 +34,6 @@ public class TorpedoDrive : MonoBehaviour
 
     public void TorpedoMove()
     {
-        m_Rigidbody.velocity = transform.forward * speed;
 
         if (timer > 0)
         {

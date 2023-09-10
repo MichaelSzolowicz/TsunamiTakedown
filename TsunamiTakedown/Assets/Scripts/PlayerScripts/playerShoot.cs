@@ -33,17 +33,22 @@ public class playerShoot : MonoBehaviour
     //Player States: Aim, Readying, Firing, Recovering
     public string playerState;
 
+    Controller controller;
+    public RotParallelFloor rotator;
+
     // Start is called before the first frame update
     void Start()
     {
         AimingSetup();
         ogRotation = this.transform.rotation;
+
+        controller = GetComponentInParent<Controller>();
     }
 
     /// <summary>
     /// Run the script based on current state each second
     /// </summary>
-    private void FixedUpdate()
+    private void Update()
     {
         StateManaging();
     }
@@ -53,6 +58,12 @@ public class playerShoot : MonoBehaviour
     /// </summary>
     public void StateManaging()
     {
+        Aiming();
+        Readying();
+        Shooting();
+
+        return;
+
         if (playerState == "Aim")
         {
             Aiming();
@@ -82,7 +93,7 @@ public class playerShoot : MonoBehaviour
         //
 
         //If the player left clicks, begin the shooting process.
-        if (Input.GetKey(KeyCode.Mouse0))
+        //if (Input.GetKey(KeyCode.Mouse0))
         {
             cursorTarget = mousePosition();
             //Cursor.lockState = CursorLockMode.Locked;
@@ -107,6 +118,21 @@ public class playerShoot : MonoBehaviour
         //Start by rotating the player to face where they clicked
         //Cursor.lockState = CursorLockMode.Locked;
 
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        //orbVector = Input.mousePosition - orbVector;
+        //float angle = Mathf.Atan2(orbVector.y, orbVector.x) * Mathf.Rad2Deg;
+
+
+        if(!rotator.probeHit)
+        {
+            transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - cursorTarget).normalized);
+            //print("Rot2: " + (transform.position - cursorTarget).normalized);
+        }
+        //Vector3 eul = transform.rotation.eulerAngles;
+
+
+
+        /*
         Vector3 dir = cursorTarget - transform.position;
         dir.z = 0; // keep the direction strictly horizontal
 
@@ -121,6 +147,7 @@ public class playerShoot : MonoBehaviour
         {
             playerState = "Shooting";
         }
+        */
     }
 
     /// <summary>
@@ -128,12 +155,21 @@ public class playerShoot : MonoBehaviour
     /// </summary>
     public void Shooting()
     {
-        GameObject torp = Instantiate(torpPrefab);
-        torp.transform.position = this.gameObject.transform.position;
-        torp.transform.rotation = this.gameObject.transform.rotation;
-        //torp.transform.rotation = Quaternion.Euler(this.GetComponent<playerMovement>().playerCamera.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            GameObject torp = Instantiate(torpPrefab);
+            torp.transform.position = this.gameObject.transform.position;
 
-        playerState = "Recovering";
+            torp.transform.rotation = Quaternion.FromToRotation(Vector3.forward, (cursorTarget - transform.position).normalized);
+            //torp.transform.rotation = Quaternion.Euler(this.GetComponent<playerMovement>().playerCamera.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+
+            if(controller)
+            {
+                torp.GetComponent<Rigidbody>().velocity += controller.GetVelocity();
+            }
+
+            playerState = "Recovering";
+        }
     }
 
     /// <summary>
@@ -141,6 +177,7 @@ public class playerShoot : MonoBehaviour
     /// </summary>
     public void Recovering()
     {
+        /*
         // slerp to the desired rotation over time
         transform.rotation = Quaternion.Slerp(transform.rotation, ogRotation, torpedoSS * Time.deltaTime);
         
@@ -151,6 +188,7 @@ public class playerShoot : MonoBehaviour
         {
             AimingSetup();
         }
+        */
     }
 
     public void AimingSetup()
@@ -166,7 +204,7 @@ public class playerShoot : MonoBehaviour
     {
         Vector3 screenPosition = Input.mousePosition;
 
-        screenPosition.z = 10.0f; //distance of the plane from the camera
+        screenPosition.z = transform.position.z - _camera.transform.position.z; //distance of the plane from the camera
         return Camera.main.ScreenToWorldPoint(screenPosition);
     }
 }
