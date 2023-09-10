@@ -67,7 +67,7 @@ MonoBehaviour:
   maxAcceleration: 3.4028235e+38
   slopeThreshold: 0.9
   gravityScale: 3
-  airControlMultiplier: 0.5
+  airControlMultiplier: 0.8
   inputScale: 5000
 --- !u!54 &4249563865427302022
 Rigidbody:
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7652024015206346357}
   - component: {fileID: 3908985976619896086}
   - component: {fileID: 3465863905688471356}
+  - component: {fileID: 2179202335826264068}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -166,3 +167,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2179202335826264068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5350953932213584895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54120ddae5b58654c878d877fb30d809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updatedTransform: {fileID: 7652024015206346357}
