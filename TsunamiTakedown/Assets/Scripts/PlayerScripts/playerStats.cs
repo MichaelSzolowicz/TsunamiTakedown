@@ -4,31 +4,15 @@ using UnityEngine;
 
 public class playerStats : MonoBehaviour
 {
-    [SerializeField]
-    private int maxHP;
-
-    [SerializeField]
-    private int hp;
-
-    private bool invincible = false;
-
+    // Start is called before the first frame update
     void Start()
     {
-        hp = maxHP;
+        
     }
 
-    void removeInvincible()
+    // Update is called once per frame
+    void Update()
     {
-        invincible = false;
-    }
-
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "SeaMonster" && invincible == false)
-        {
-            hp--;
-            invincible = true;
-            Invoke("removeInvincible", 2f);
-        }
+        
     }
 }
