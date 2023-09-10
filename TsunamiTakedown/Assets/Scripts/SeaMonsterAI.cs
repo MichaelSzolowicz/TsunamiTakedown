@@ -165,9 +165,9 @@ public class SeaMonsterAI : MonoBehaviour
         {
             bounce = true;
 
-            /*Quaternion tempRotY = transform.rotation;
-            tempRotY.y = transform.rotation.y - 90f;
-            transform.rotation = tempRotY;*/
+            Vector3 tempBounce = leftBound;
+            tempBounce.y = transform.rotation.y;
+            transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
 
             if (enemyState == "ready")
             {
@@ -176,9 +176,9 @@ public class SeaMonsterAI : MonoBehaviour
         }
         else if (bounce == true && curPos.x <= leftBound.x)
         {
-            /*Quaternion tempRotY = transform.rotation;
-            tempRotY.y = transform.rotation.y + 45f;
-            transform.rotation = tempRotY;*/
+            Vector3 tempBounce = rightBound;
+            tempBounce.y = transform.rotation.y;
+            transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
 
             bounce = false;
         }
@@ -371,10 +371,16 @@ public class SeaMonsterAI : MonoBehaviour
                 if (bounce != true)
                 {
                     bounce = true;
+                    Vector3 tempBounce = leftBound;
+                    tempBounce.y = transform.rotation.y;
+                    transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
                 }
                 else
                 {
                     bounce = false;
+                    Vector3 tempBounce = rightBound;
+                    tempBounce.y = transform.rotation.y;
+                    transform.rotation = Quaternion.FromToRotation(Vector3.forward, (transform.position - tempBounce).normalized);
                 }
             }   
         }
