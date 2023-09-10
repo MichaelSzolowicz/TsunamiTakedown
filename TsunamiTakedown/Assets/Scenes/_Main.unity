@@ -1490,11 +1490,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   torpPrefab: {fileID: 8190151038308500363, guid: bcee44996a1860a4da9879629e357672, type: 3}
-  _camera: {fileID: 0}
+  _camera: {fileID: 508373484}
   rot: {x: 0, y: 0, z: 0, w: 0}
-  torpedoSS: 0
   playerState: 
-  rotator: {fileID: 0}
+  rotator: {fileID: 2179202335928130368}
 --- !u!1001 &1495758523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2219,6 +2218,7 @@ GameObject:
   - component: {fileID: 3465863905723161720}
   - component: {fileID: 2179202335928130368}
   - component: {fileID: 1440041299}
+  - component: {fileID: 5350953932246014140}
   m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
@@ -2226,6 +2226,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5350953932246014140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5350953932246014139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f6b8779855e0494195cdcd95446f7da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 0
+  hp: 0
+  gameOverUI: {fileID: 0}
+  rapidFire: 0
+  invincibility: 0
+  homing: 0
 --- !u!4 &7652024015106815281
 Transform:
   m_ObjectHideFlags: 0
