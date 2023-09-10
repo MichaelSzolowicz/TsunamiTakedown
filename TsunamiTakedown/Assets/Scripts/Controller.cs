@@ -91,9 +91,23 @@ public class Controller : MonoBehaviour
         {
             componentVelocity = componentVelocity.normalized * maxSpeed;
         }
+        
+
 
         // Appply delta position.
         Vector3 deltaPos = componentVelocity * deltaTime;
+
+        RaycastHit hit;
+        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
+        Vector3 sphere1 = transform.position - ((capsule.height / 2) + capsule.radius) * transform.up;
+        Vector3 sphere2 = transform.position + ((capsule.height / 2) + capsule.radius) * transform.up;
+
+        if (Physics.Linecast(transform.position, transform.position + deltaPos, out hit))
+        {
+            print("Hit: " + hit.transform);
+            deltaPos += hit.normal * (deltaPos.magnitude - hit.distance);
+        }
+
         transform.position += deltaPos;
 
         // Zero out forces.
@@ -230,5 +244,16 @@ public class Controller : MonoBehaviour
     protected void CancelJump(InputAction.CallbackContext context)
     {
         walkingFritction = baseWalkingFriction;
+    }
+
+
+    public Vector3 GetVelocity()
+    {
+        return componentVelocity;
+    }
+
+    public float GetInput()
+    {
+        return pendingInput;
     }
 }
