@@ -8,7 +8,6 @@ public class RotParallelFloor : MonoBehaviour
     public float probeDepth = 50.0f;
     protected Controller controller;
 
-    public bool probeHit = false;
 
     protected void Awake()
     {
@@ -42,8 +41,11 @@ public class RotParallelFloor : MonoBehaviour
                 }
 
 
+
                 lookRotation = Quaternion.LookRotation(Vector3.Cross(updatedTransform.right, hit.normal));
-                updatedTransform.rotation = lookRotation;  
+                updatedTransform.rotation = lookRotation;
+
+                
             }
         }
 
@@ -55,13 +57,9 @@ public class RotParallelFloor : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         Vector3 start = updatedTransform.position;
 
-        if(Physics.Raycast(start, Vector3.down, out hit, probeDepth, 3))
+        if(Physics.Raycast(start, Vector3.down, out hit, probeDepth))
         {
-            probeHit = true;
-        }
-        else
-        {
-            probeHit = false;
+
         }
 
         return hit;

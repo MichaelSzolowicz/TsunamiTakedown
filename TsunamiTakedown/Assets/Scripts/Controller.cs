@@ -256,9 +256,4 @@ public class Controller : MonoBehaviour
     {
         return pendingInput;
     }
-
-    public bool GetContact()
-    {
-        return contacts;
-    }
 }
