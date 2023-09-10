@@ -89,7 +89,6 @@ public class SeaMonsterAI : MonoBehaviour
                 {
                     rushAttack();
                 }
-
             }
         }
 
