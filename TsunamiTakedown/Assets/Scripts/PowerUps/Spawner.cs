@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
         float spawnX = Random.Range (leftBound.transform.position.x, rightBound.transform.position.x);
 
         GameObject powerUp = Instantiate(powerUpChoices[itemChoice]);
-        powerUp.transform.position = new Vector3 (spawnX, rightBound.transform.position.y, 0f);
+        powerUp.transform.position = new Vector3 (spawnX, rightBound.transform.position.y, transform.position.z);
 
         Invoke("spawnItems", timer);
     }

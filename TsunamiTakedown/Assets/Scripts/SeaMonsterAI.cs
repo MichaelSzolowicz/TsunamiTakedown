@@ -80,7 +80,7 @@ public class SeaMonsterAI : MonoBehaviour
 
         baseRotation = this.transform.rotation;
         secondRotation = baseRotation;
-        secondRotation.y -= 180f;
+        secondRotation = Quaternion.AngleAxis(90, Vector3.up);
 
         enemyState = "swimming";
     }
